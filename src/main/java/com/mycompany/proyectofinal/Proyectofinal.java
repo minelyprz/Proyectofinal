@@ -23,6 +23,12 @@ public class Proyectofinal {
           admin.setUsuario("admin");
           
           usuarios.add(admin);
+        Usuario vendedor = new Usuario();
+        vendedor.setNombre("Lourdes");
+        vendedor.setPassword("Astrid1");
+          vendedor.setRol(2);
+          vendedor.setUsuario("jvendedor");
+          usuarios.add(vendedor);
       }
        public static ArrayList<Libros> libros = new ArrayList<>();  
        public static ArrayList<Cupones> cupones = new ArrayList<>();

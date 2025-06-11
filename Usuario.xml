@@ -7,15 +7,15 @@
         <Rol>1</Rol>
     </Usuario>
     <Usuario>
-        <Nombre>astrid</Nombre>
-        <User>j</User>
-        <Password>Astriid1</Password>
-        <Rol>1</Rol>
-    </Usuario>
-    <Usuario>
-        <Nombre>a</Nombre>
-        <User>A</User>
+        <Nombre>Lourdes</Nombre>
+        <User>jvendedor</User>
         <Password>Astrid1</Password>
         <Rol>2</Rol>
+    </Usuario>
+    <Usuario>
+        <Nombre>d</Nombre>
+        <User>mineprz</User>
+        <Password>Minely1</Password>
+        <Rol>1</Rol>
     </Usuario>
 </Usuarios>

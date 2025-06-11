@@ -105,13 +105,12 @@ public class GestionLibros extends javax.swing.JFrame {
         AgregarLibro agregarLibro = new AgregarLibro(this); 
         agregarLibro.setVisible(true);
     }
-      
     
-       public void actualizarTabla() {
-        
-        consultaInventario.actualizarTabla();
+    public void llenarTabla(){
+        consultaInventario.llenarTabla();
     }
-    
+   
+      
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
          this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed

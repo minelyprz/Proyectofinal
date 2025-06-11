@@ -3,33 +3,38 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.proyectofinal;
+import static com.mycompany.proyectofinal.Proyectofinal.libros;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
+import java.time.LocalTime;
+
+
 /**
  *
  * @author minely
  */
 public class RegistroVenta extends javax.swing.JFrame {
-    private ArrayList<Libros> listaLibros = new ArrayList<>();
     private Usuario usuarioActual;
     private DefaultTableModel modeloTabla;
     private ArrayList<VentaLibros> cliente = new ArrayList<>();
-    
-
+   
     /**
      * Creates new form RegistroVenta
      */
     public RegistroVenta(Usuario usuario) {
         initComponents();
+        cargarDatos();
         this.usuarioActual = usuario;
         jTextField3.setEditable(false);
         jTextField4.setEditable(false);
-         cargarLibros(); 
-          cargarDatos();
          modeloTabla = new DefaultTableModel(new String[]{"N.","Libro","Cantidad", "Precio unitario", "Subtotal","IVA","Total a pagar","Acción"}, 0);
         jTable1.setModel(modeloTabla);
+        jComboBox1.removeAllItems();
+      for (Libros libro : libros) {
+         jComboBox1.addItem(libro.getTitulo());  // solo el título
+     }
     }
     
     /**
@@ -321,13 +326,9 @@ class ButtonEditor extends javax.swing.DefaultCellEditor {
 }
     
     
-    private void agregarLibroATabla() {
-    try {
-        int cantidad = Integer.parseInt(jTextField1.getText().trim());
-        int index = jComboBox1.getSelectedIndex();
-        if (index < 0 || cantidad <= 0) return;
-
-        Libros libro = listaLibros.get(index);
+    private void agregarLibroATabla(Libros libro, int cantidad) {
+   
+       
         double precio = libro.getPrecio();
         double subtotal = precio * cantidad;
         double iva = Math.round(subtotal * 0.12 * 100.0) / 100.0;
@@ -346,38 +347,18 @@ class ButtonEditor extends javax.swing.DefaultCellEditor {
 
         modeloTabla.addRow(fila);
         agregarBotonEliminar();
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Ingrese una cantidad válida.");
-    }
 }
     
-     private void cargarLibros() {
-    listaLibros.add(new Libros("El Principito","Antoine","Novela", 50,20));
-    listaLibros.add(new Libros("Cien Años de Soledad","","", 80,10));
-    listaLibros.add(new Libros("Crepusculo","","", 70,2));
-    listaLibros.add(new Libros("Barbie","","",85,3));
-    jComboBox1.removeAllItems(); 
-
-    for (Libros libro : listaLibros) {
-        jComboBox1.addItem(libro.getTitulo());
-    }
-}
       private void cargarDatos(){
         cliente.add(new VentaLibros("12034","Minely", "Guatemala"));
     }
-    
     
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-       int index = jComboBox1.getSelectedIndex();
-    if (index >= 0) {
-        Libros libro = listaLibros.get(index);
-        jTextField5.setText(String.valueOf(libro.getPrecio()));
-    }
-
+      
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -394,10 +375,10 @@ class ButtonEditor extends javax.swing.DefaultCellEditor {
        
         int index = jComboBox1.getSelectedIndex();
         if (index >= 0) {
-            Libros libro = listaLibros.get(index);
+            Libros libro = libros.get(index);
             
             
-            int total = libro.getPrecio() * cantidad;
+            double total = libro.getPrecio() * cantidad;
             
           
             jTextField6.setText(String.valueOf(total));
@@ -418,41 +399,120 @@ class ButtonEditor extends javax.swing.DefaultCellEditor {
     }//GEN-LAST:event_jTextField6ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        agregarLibroATabla();
+         int index = jComboBox1.getSelectedIndex();
+    if (index < 0) {
+        JOptionPane.showMessageDialog(this, "Debes seleccionar un libro.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    Libros libro = libros.get(index);
+    int cantidadSolicitada;
+
+    try {
+        cantidadSolicitada = Integer.parseInt(jTextField1.getText());
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Cantidad inválida.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    if (libro.getCantidad() <= 0) {
+        JOptionPane.showMessageDialog(this, "Este libro no tiene existencias.", "Sin stock", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    if (cantidadSolicitada > libro.getCantidad()) {
+        JOptionPane.showMessageDialog(this, "No hay suficientes unidades disponibles.", "Cantidad excedida", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+     agregarLibroATabla(libro, cantidadSolicitada);
+       
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        double subtotal = 0, iva = 0, total = 0, descuento = 0;
+        double subtotal = 0, iva = 0, total = 0;
     
         for (int  i = 0; i < modeloTabla.getRowCount(); i++){
             subtotal += (double) modeloTabla.getValueAt(i, 4);
              iva += (double) modeloTabla.getValueAt(i, 5);
                      total += (double) modeloTabla.getValueAt(i, 6);
         }
-        
-    jTextField5.setText(String.format("%.2f", subtotal)); 
-    jTextField7.setText(String.format("%.2f", iva));     
-    jTextField8.setText(String.format("%.2f", total)); 
-    jTextField6.setText(String.format("%.2f", descuento));
-    
-    
-    String nit = jTextField2.getText();  // NIT del cliente
-    String nombre = jTextField3.getText(); // Nombre del cliente
-    String direccion = jTextField4.getText(); // Dirección del cliente
-
-    // Aquí puedes definir cómo obtener el vendedor si tienes un ComboBox
-    String vendedor = usuarioActual.getNombre(); // Cambia esto si es necesario
-
-    double totalVenta = Double.parseDouble(jTextField8.getText());  // Total con IVA
-    double totalSinIVA = Double.parseDouble(jTextField5.getText());  // Total sin IVA
-    LocalDate fecha = LocalDate.now();
-
-   VentaLibros venta = new VentaLibros(nit, nombre, direccion, totalVenta, usuarioActual, fecha);
-
-
-    Rventa.agregarVenta(venta);
      
-    JOptionPane.showMessageDialog(this,"Venta registrada exitosamente.");
+    String codigoCupon = jTextField6.getText().trim();  // Campo de entrada del cupón
+    double descuento = 0;
+    boolean cuponValido = false;
+    Cupones cupon =  null;
+    for (Cupones c : Proyectofinal.cupones) {
+        if (c.getcodigo().equalsIgnoreCase(codigoCupon)) {
+            cupon  = c;
+            descuento = c.getvalor(total);  // Aplica descuento
+            cuponValido = true;
+            break;
+        }
+    }
+    
+    
+if (cuponValido) {
+    if ("porcentaje".equalsIgnoreCase(cupon.getTipo())) {
+        jTextField6.setText(String.format("%.2f%%", cupon.getValorOriginal()));  // Aquí sólo el valor sin calcular
+    } else {
+        jTextField6.setText(String.format("%.2f", cupon.getvalor()));
+    }
+} else {
+    JOptionPane.showMessageDialog(this, "Cupón inválido o no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+    jTextField6.setText("0.00");
+    descuento = 0;
+}
+
+    
+    double totalConDescuento = total - descuento;
+
+    // Mostrar valores en los campos
+    jTextField5.setText(String.format("%.2f", subtotal));
+    jTextField7.setText(String.format("%.2f", iva));
+    jTextField8.setText(String.format("%.2f", totalConDescuento));
+   
+
+    
+    String nit = jTextField2.getText();
+    String nombre = jTextField3.getText();
+    String direccion = jTextField4.getText();
+    String vendedor = usuarioActual.getNombre();
+    LocalDate fecha = LocalDate.now();
+    LocalTime hora = LocalTime.now();
+    
+    for (int i = 0; i < modeloTabla.getRowCount(); i++) {
+    String tituloTabla = (String) modeloTabla.getValueAt(i, 1);
+    int cantidadVendida = (int) modeloTabla.getValueAt(i, 2);
+
+    Libros libroVendido = null;
+    for (Libros libro : libros) {
+        if (libro.getTitulo().equals(tituloTabla)) {
+            libroVendido = libro;
+            break;
+        }
+    }
+ 
+    VentaLibros venta = new VentaLibros(nit,nombre,descuento, direccion, totalConDescuento, usuarioActual, fecha, hora, cuponValido ? cupon.getTipo() : "ninguno",
+    cuponValido ? cupon.getValorOriginal(): 0, libroVendido, cantidadVendida);
+    Rventa.agregarVenta(venta);
+
+     libroVendido.setCantidad(libroVendido.getCantidad() - cantidadVendida);
+   
+    }
+    jComboBox1.removeAllItems();
+    for (Libros libro : libros) {
+        jComboBox1.addItem(libro.getTitulo());  // solo muestra el título
+    }
+    modeloTabla.setRowCount(0);
+
+    JOptionPane.showMessageDialog(this, "Venta registrada exitosamente.");
+ 
+    jTextField6.setText("");
+    jTextField5.setText("");
+    jTextField7.setText("");
+    jTextField8.setText("");
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed

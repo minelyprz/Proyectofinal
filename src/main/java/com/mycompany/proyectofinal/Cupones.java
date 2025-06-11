@@ -3,12 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.proyectofinal;
+import java.io.Serializable;
 import java.time.LocalDate;
 /**
  *
  * @author minely
  */
-public class Cupones {
+public class Cupones implements Serializable{
+     private static final long serialVersionUID = 1L;
     private String codigo;
     private double valor;
     private LocalDate fecha;
@@ -54,4 +56,22 @@ public void setTipo(String tipo) {
     public String toString(){
         return "Codigo:"+codigo+", Valor:" +valor+", Fecha:"+fecha;
     }
+    public double getvalor(double total) {
+    if (tipo == null) return 0;
+
+    switch (tipo.toLowerCase()) {
+        case "porcentaje":
+            return total * (valor / 100.0);
+        case "fijo":
+        case "monto":
+            return valor;
+        default:
+            // Tipo desconocido: no aplica descuento
+            return 0;
+    }
+}
+    
+    public double getValorOriginal() {
+    return valor;
+}
 }

@@ -11,4 +11,14 @@
         <exec.mainClass>com.mycompany.proyectofinal.Proyectofinal</exec.mainClass>
     </properties>
     <name>Proyectofinal</name>
+    <dependencies>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version>
+        </dependency>
+    </dependencies>
+ 
 </project>
+
+   

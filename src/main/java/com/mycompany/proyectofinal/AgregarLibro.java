@@ -3,20 +3,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.proyectofinal;
-import com.mycompany.proyectofinal.Proyectofinal;
 import javax.swing.*;
+
 /**
  *
  * @author minely
  */
 public class AgregarLibro extends javax.swing.JFrame {
         private GestionLibros gestionLibros;  
-
+     
+       
     public AgregarLibro(GestionLibros gestionLibros) {
         initComponents();
         this.gestionLibros = gestionLibros; 
         setLocationRelativeTo(gestionLibros);  
-        
+         
     }
     private boolean verificarDuplicado(String titulo, String autor) {
     for (Libros libro : Proyectofinal.libros) {
@@ -158,28 +159,27 @@ public class AgregarLibro extends javax.swing.JFrame {
     if (validarCamposVacios(titulo, autor, genero, precioStr, cantidadStr)) {
         return; 
     }
-    int precio = validarNumeroPositivo(precioStr, "Precio");
+    double precio = validarNumeroPositivo(precioStr, "Precio");
     if (precio == -1) return; 
 
-    int cantidad = validarNumeroPositivo(cantidadStr, "Cantidad");
+    int cantidad = validarEnteroPositivo(cantidadStr, "Cantidad");
     if (cantidad == -1) return; 
     
     if (verificarDuplicado(titulo, autor)) {
         JOptionPane.showMessageDialog(this, "El libro con el mismo título y autor ya existe.");
-        return; // No agregar el libro duplicado
+        return; 
     }
     
     Libros nuevoLibro = new Libros(titulo, autor, genero, precio, cantidad);
-    
     Proyectofinal.libros.add(nuevoLibro);
-    
+   
     JOptionPane.showMessageDialog(this, "Libro agregado exitosamente.");
      
    
     this.dispose();
 
     
-    gestionLibros.actualizarTabla();
+    gestionLibros.llenarTabla();
         
     }//GEN-LAST:event_jButton1ActionPerformed
     private boolean validarCamposVacios(String... campos) {
@@ -193,9 +193,9 @@ public class AgregarLibro extends javax.swing.JFrame {
 }
 
 
-private int validarNumeroPositivo(String campo, String nombreCampo) {
+private double validarNumeroPositivo(String campo, String nombreCampo) {
     try {
-        int numero = Integer.parseInt(campo);
+        double numero = Double.parseDouble(campo);
         if (numero <= 0) {
             JOptionPane.showMessageDialog(this, "El campo " + nombreCampo + " debe ser un número positivo.");
             return -1;
@@ -206,7 +206,19 @@ private int validarNumeroPositivo(String campo, String nombreCampo) {
         return -1; 
     }
 }
-   
+   private int validarEnteroPositivo(String campo, String nombreCampo) {
+    try {
+        int numero = Integer.parseInt(campo);
+        if (numero <= 0) {
+            JOptionPane.showMessageDialog(this, "El campo " + nombreCampo + " debe ser un número entero positivo.");
+            return -1;
+        }
+        return numero;
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "El campo " + nombreCampo + " debe ser un número entero válido.");
+        return -1;
+    }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

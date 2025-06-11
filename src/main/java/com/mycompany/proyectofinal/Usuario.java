@@ -4,11 +4,14 @@
  */
 package com.mycompany.proyectofinal;
 
+import java.io.Serializable;
+
 /**
  *
  * @author minely
  */
-public class Usuario {
+public class Usuario implements Serializable{
+     private static final long serialVersionUID = 1L;
       private String usuario;
    private String nombre;
    private int rol;

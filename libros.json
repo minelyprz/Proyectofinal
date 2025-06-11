@@ -1,0 +1,51 @@
+[{
+    "titulo": "Cien años de soledad",
+    "autor": "Gabriel García Márquez",
+    "genero": "Realismo mágico",
+    "precio": 150.00,
+    "cantidad": 10
+  },
+  {
+    "titulo": "1984",
+    "autor": "George Orwell",
+    "genero": "Ciencia ficción",
+    "precio": 120.50,
+    "cantidad": 5
+  },
+  {
+    "titulo": "Don Quijote de la Mancha",
+    "autor": "Miguel de Cervantes",
+    "genero": "Novela clásica",
+    "precio": 180.75,
+    "cantidad": 7
+  },
+  {
+    "titulo": "El Principito",
+    "autor": "Antoine de Saint-Exupéry",
+    "genero": "Literatura infantil",
+    "precio": 95.25,
+    "cantidad": 15
+  },
+  {
+    "titulo": "La sombra del viento",
+    "autor": "Carlos Ruiz Zafón",
+    "genero": "Misterio",
+    "precio": 135.00,
+    "cantidad": 8
+  },
+  {
+    "titulo": "Harry Potter",
+    "autor": "JK ",
+    "genero": "Fantansía",
+    "precio": 135.00,
+    "cantidad": 8
+  },
+  {
+    "titulo": "EL sombreron",
+    "autor": "Guatemala",
+    "genero": "Misterio",
+    "precio": 135.00,
+    "cantidad": 10
+  }
+
+]

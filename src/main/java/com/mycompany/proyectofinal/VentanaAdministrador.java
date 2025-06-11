@@ -51,16 +51,19 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Courier 10 Pitch", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Courier 10 Pitch", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 204, 204));
         jLabel1.setText("Bienvenido Administrador");
 
+        jButton1.setFont(new java.awt.Font("Courier 10 Pitch", 1, 13)); // NOI18N
         jButton1.setText("Gestión de Libros");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -68,6 +71,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setFont(new java.awt.Font("Courier 10 Pitch", 1, 13)); // NOI18N
         jButton2.setText("Cerrar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -75,6 +79,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setFont(new java.awt.Font("Courier 10 Pitch", 1, 13)); // NOI18N
         jButton3.setText("Gestión de cupones");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -82,6 +87,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
             }
         });
 
+        jButton4.setFont(new java.awt.Font("Courier 10 Pitch", 1, 13)); // NOI18N
         jButton4.setText("Crear Cuenta");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,6 +95,7 @@ public class VentanaAdministrador extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setFont(new java.awt.Font("Courier 10 Pitch", 1, 13)); // NOI18N
         jButton5.setText("Ver mi perfil");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,10 +103,27 @@ public class VentanaAdministrador extends javax.swing.JFrame {
             }
         });
 
+        jButton6.setFont(new java.awt.Font("Courier 10 Pitch", 1, 13)); // NOI18N
         jButton6.setText("Reporte de ventas");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
+            }
+        });
+
+        jButton7.setFont(new java.awt.Font("Courier 10 Pitch", 1, 13)); // NOI18N
+        jButton7.setText("Informe de ventas");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        jButton8.setFont(new java.awt.Font("Courier 10 Pitch", 1, 13)); // NOI18N
+        jButton8.setText("Informe de libros vendidos");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
             }
         });
 
@@ -130,44 +154,46 @@ public class VentanaAdministrador extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(117, 117, 117)
-                .addComponent(jLabel1)
-                .addContainerGap(116, Short.MAX_VALUE))
+                .addGap(79, 79, 79)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton3)
+                    .addComponent(jButton1)
+                    .addComponent(jButton5))
+                .addGap(83, 83, 83)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton4)
+                    .addComponent(jButton6)
+                    .addComponent(jButton7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton8)
+                    .addComponent(jButton2))
+                .addGap(79, 79, 79))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addGap(93, 93, 93)
-                        .addComponent(jButton4))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
-                            .addComponent(jButton5))
-                        .addGap(107, 107, 107)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2)
-                            .addComponent(jButton6))))
-                .addGap(71, 71, 71))
+                .addComponent(jLabel1)
+                .addGap(277, 277, 277))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(19, 19, 19)
                 .addComponent(jLabel1)
-                .addGap(43, 43, 43)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton3))
+                .addGap(50, 50, 50)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4)
+                    .addComponent(jButton8))
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton6))
+                    .addComponent(jButton6)
+                    .addComponent(jButton2))
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton5)
-                    .addComponent(jButton2))
-                .addContainerGap(56, Short.MAX_VALUE))
+                    .addComponent(jButton7))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         pack();
@@ -216,6 +242,16 @@ public class VentanaAdministrador extends javax.swing.JFrame {
        
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+       InformeLibroV v = new InformeLibroV();
+       v.setVisible(true);
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        InformeVenta info = new InformeVenta();
+       info.setVisible(true);
+    }//GEN-LAST:event_jButton7ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -223,6 +259,8 @@ public class VentanaAdministrador extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

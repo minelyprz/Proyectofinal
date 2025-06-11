@@ -3,19 +3,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.proyectofinal;
+import java.io.Serializable;
 
 /**
  *
  * @author minely
  */
-public class Libros {
+public class Libros implements Serializable {
+ private static final long serialVersionUID = 1L;
 private String titulo;
 private String  autor;
 private String genero;
-private int precio;
+private double precio;
 private int cantidad;
 
- public Libros (String titulo, String autor, String genero, int precio, int cantidad){
+public Libros (){
+    
+}
+
+ public Libros (String titulo, String autor, String genero, double precio, int cantidad){
     this.titulo = titulo;
     this.autor = autor;
     this.genero = genero;
@@ -47,7 +53,7 @@ public void setGenero (String genero){
     this.genero = genero;
 }
 
-public int getPrecio(){
+public double getPrecio(){
     return precio;
 }
 
