@@ -31,13 +31,13 @@ public class InformeLibroV extends javax.swing.JFrame {
        modeloTabla.setRowCount(0); 
 
     for (VentaLibros venta : Rventa.obtenerVentas()) {
-        LocalDate fecha = venta.getFecha();
+        String fecha = (venta.getFecha() != null) ? venta.getFecha().toString() : "Fecha no registrada";
         Libros librovendido = venta.getLibroVendido(); 
         int cantidad = venta.getCantidad();
         double precio = librovendido.getPrecio();
 
         modeloTabla.addRow(new Object[]{
-            fecha.toString(),
+            fecha,
             cantidad,
             librovendido.getTitulo(),
             String.format("Q%.2f", precio)

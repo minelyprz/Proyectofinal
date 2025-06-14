@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.proyectofinal;
-import static com.mycompany.proyectofinal.Proyectofinal.libros;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -32,7 +31,7 @@ public class RegistroVenta extends javax.swing.JFrame {
          modeloTabla = new DefaultTableModel(new String[]{"N.","Libro","Cantidad", "Precio unitario", "Subtotal","IVA","Total a pagar","Acción"}, 0);
         jTable1.setModel(modeloTabla);
         jComboBox1.removeAllItems();
-      for (Libros libro : libros) {
+      for (Libros libro :  ControladorDato.getListas().getLibros()) {
          jComboBox1.addItem(libro.getTitulo());  // solo el título
      }
     }
@@ -375,7 +374,7 @@ class ButtonEditor extends javax.swing.DefaultCellEditor {
        
         int index = jComboBox1.getSelectedIndex();
         if (index >= 0) {
-            Libros libro = libros.get(index);
+            Libros libro = ControladorDato.getListas().getLibros().get(index);
             
             
             double total = libro.getPrecio() * cantidad;
@@ -405,7 +404,7 @@ class ButtonEditor extends javax.swing.DefaultCellEditor {
         return;
     }
 
-    Libros libro = libros.get(index);
+    Libros libro = ControladorDato.getListas().getLibros().get(index);
     int cantidadSolicitada;
 
     try {
@@ -441,12 +440,27 @@ class ButtonEditor extends javax.swing.DefaultCellEditor {
     double descuento = 0;
     boolean cuponValido = false;
     Cupones cupon =  null;
-    for (Cupones c : Proyectofinal.cupones) {
+    for (Cupones c : ControladorDato.getListas().getCupones()) {
         if (c.getcodigo().equalsIgnoreCase(codigoCupon)) {
             cupon  = c;
-            descuento = c.getvalor(total);  // Aplica descuento
-            cuponValido = true;
+            
+            
+          // Validar vencimiento
+        if (c.getfecha().isBefore(LocalDate.now())) {
+            JOptionPane.showMessageDialog(this, "El cupón ha vencido.", "Cupón inválido", JOptionPane.ERROR_MESSAGE);
             break;
+        }
+
+        // Validar usos disponibles
+        if (c.getUsosDisponibles() <= 0) {
+            JOptionPane.showMessageDialog(this, "El cupón ya no tiene usos disponibles.", "Cupón inválido", JOptionPane.ERROR_MESSAGE);
+            break;
+        }   
+        descuento = c.getvalor(total);  // Aplica descuento
+            cuponValido = true;
+             c.setUsosDisponibles(c.getUsosDisponibles() - 1);
+            break;
+            
         }
     }
     
@@ -485,7 +499,7 @@ if (cuponValido) {
     int cantidadVendida = (int) modeloTabla.getValueAt(i, 2);
 
     Libros libroVendido = null;
-    for (Libros libro : libros) {
+    for (Libros libro :  ControladorDato.getListas().getLibros()) {
         if (libro.getTitulo().equals(tituloTabla)) {
             libroVendido = libro;
             break;
@@ -500,7 +514,7 @@ if (cuponValido) {
    
     }
     jComboBox1.removeAllItems();
-    for (Libros libro : libros) {
+    for (Libros libro :  ControladorDato.getListas().getLibros()) {
         jComboBox1.addItem(libro.getTitulo());  // solo muestra el título
     }
     modeloTabla.setRowCount(0);

@@ -16,7 +16,7 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
     }
-
+ 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -118,7 +118,7 @@ public class Login extends javax.swing.JFrame {
         String Password = jTextField3.getText();
         boolean existe = false;
       
-     for (Usuario u : Proyectofinal.usuarios) {
+     for (Usuario u : ControladorDato.getListas().getUsuarios()) {
     if (u.getUsuario().equals(Usuario) && u.getPassword().equals(Password)) {
         existe = true;
         System.out.println("Rol del usuario: " + u.getRol());  // Depuración

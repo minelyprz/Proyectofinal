@@ -15,17 +15,26 @@ public class Cupones implements Serializable{
     private double valor;
     private LocalDate fecha;
     private String tipo;
+    private int usosDisponibles;
     
     public Cupones(){
         
     }
     
-    public Cupones(String codigo, double valor, LocalDate fecha, String tipo){
+    public Cupones(String codigo, double valor, LocalDate fecha, String tipo, int usosDisponibles){
         this.codigo = codigo;
         this.valor = valor;
         this.fecha = fecha;
         this.tipo = tipo;
+        this.usosDisponibles = usosDisponibles; 
     }
+     public int getUsosDisponibles(){
+        return usosDisponibles;
+    }
+    public void setUsosDisponibles(int usosDisponibles){
+        this.usosDisponibles = usosDisponibles;
+    }
+    
     public String getcodigo(){
         return codigo;
     }

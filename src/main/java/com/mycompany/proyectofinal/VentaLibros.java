@@ -42,8 +42,8 @@ public class VentaLibros implements Serializable {
     this.direccionCliente = direccionCliente;
     this.total = total;
     this.vendedor = vendedor;
-    this.fecha = fecha;
-    this.hora = hora;
+    this.fecha = (fecha != null) ? fecha : LocalDate.now();
+    this.hora = (hora != null) ? hora : LocalTime.now();
     this.tipoDescuento = tipoDescuento;
     this.valorOriginal = valorOriginal;
     this.librovendido =  librovendido;
@@ -136,6 +136,22 @@ public class VentaLibros implements Serializable {
      public void setVendedor(Usuario vendedor){
           this.vendedor = vendedor;
      }
+     @Override
+public String toString() {
+    return "Cliente: " + nombreCliente +
+           "\nNIT: " + nitCliente +
+           "\nDirección: " + direccionCliente +
+           "\nLibro: " + (librovendido != null ? librovendido.getTitulo() : "N/A") +
+           "\nCantidad: " + cantidad +
+           "\nTotal: Q" + total +
+           "\nDescuento: Q" + descuento +
+           "\nTipo de Descuento: " + tipoDescuento +
+           "\nValor Original: Q" + valorOriginal +
+           "\nFecha: " + (fecha != null ? fecha.toString() : "No registrada") +
+           "\nHora: " + (hora != null ? hora.toString() : "No registrada") +
+           "\nVendedor: " + (vendedor != null ? vendedor.getUsuario() : "N/A");
+}
+
 }
     
     

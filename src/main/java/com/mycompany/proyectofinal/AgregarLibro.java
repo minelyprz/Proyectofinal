@@ -20,7 +20,7 @@ public class AgregarLibro extends javax.swing.JFrame {
          
     }
     private boolean verificarDuplicado(String titulo, String autor) {
-    for (Libros libro : Proyectofinal.libros) {
+    for (Libros libro : ControladorDato.getListas().getLibros()) {
         if (libro.getTitulo().equalsIgnoreCase(titulo) && libro.getAutor().equalsIgnoreCase(autor)) {
             return true; // Ya existe un libro con el mismo título y autor
         }
@@ -171,8 +171,11 @@ public class AgregarLibro extends javax.swing.JFrame {
     }
     
     Libros nuevoLibro = new Libros(titulo, autor, genero, precio, cantidad);
-    Proyectofinal.libros.add(nuevoLibro);
-   
+  Listas listas = ControladorDato.getListas();
+  listas.getLibros().add(nuevoLibro);
+  ControladorDato.setListas(listas);  // Guarda en memoria
+  ControladorDato.guardarDatos(); 
+
     JOptionPane.showMessageDialog(this, "Libro agregado exitosamente.");
      
    

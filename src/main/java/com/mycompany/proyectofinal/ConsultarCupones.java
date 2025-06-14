@@ -37,7 +37,7 @@ public class ConsultarCupones extends javax.swing.JFrame {
      DefaultTableModel modeloTabla = (DefaultTableModel) jTable1.getModel();
     modeloTabla.setRowCount(0); // Limpiar tabla
 
-    for (Cupones cupon : Proyectofinal.cupones) {
+    for (Cupones cupon : ControladorDato.getListas().getCupones()){
         String descuentoTexto;
 
         if ("porcentaje".equalsIgnoreCase(cupon.getTipo())) {
@@ -229,7 +229,7 @@ public class ConsultarCupones extends javax.swing.JFrame {
             }
             else{
                if(JOptionPane.showConfirmDialog(this, "Está seguro de eliminar este cupón")== 0){
-             Proyectofinal.cupones.remove(borrar);
+             ControladorDato.getListas().getCupones().remove(borrar);
               llenarTabla();
               JOptionPane.showMessageDialog(this, "Cupón eliminado exitosamente");
               
@@ -244,7 +244,7 @@ public class ConsultarCupones extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
        int modificar = jTable1.getSelectedRow();
         if (modificar > -1){
-          cupon = Proyectofinal.cupones.get(modificar);
+           Cupones cupon = ControladorDato.getListas().getCupones().get(modificar);
             
             jTextField1.setText(cupon.getcodigo());
             jTextField2.setText(String.valueOf(cupon.getvalor()));
@@ -258,20 +258,21 @@ public class ConsultarCupones extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+      
+        int filaSeleccionada = jTable1.getSelectedRow();
 
-                                                
-    if (cupon != null){
+    if (filaSeleccionada > -1) {
         String codigo = jTextField1.getText();
         String valorTexto = jTextField2.getText().trim().replaceAll("[^\\d.]", "");
         String fechaTexto = jTextField3.getText();
-            String tipo = jComboBox2.getSelectedItem().toString().toLowerCase();
-  
-        
+        String tipo = jComboBox2.getSelectedItem().toString().toLowerCase();
+
         if (codigo.isEmpty() || valorTexto.isEmpty() || fechaTexto.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-      if (!valorTexto.matches("\\d+(\\.\\d+)?")) {
+
+        if (!valorTexto.matches("\\d+(\\.\\d+)?")) {
             JOptionPane.showMessageDialog(this, "Ingrese un valor numérico válido.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -279,13 +280,14 @@ public class ConsultarCupones extends javax.swing.JFrame {
         try {
             double valor = Double.parseDouble(valorTexto);
             LocalDate fecha = LocalDate.parse(fechaTexto, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            int usos = 5;
+            Cupones cuponModificado = new Cupones(codigo, valor, fecha, tipo, usos);
 
-            cupon.setcodigo(codigo);
-            cupon.setvalor(valor);
-            cupon.setfecha(fecha);
-            cupon.setTipo(tipo);
+            // Actualizar en la lista y guardar
+            ControladorDato.getListas().getCupones().set(filaSeleccionada, cuponModificado);
+            ControladorDato.guardarDatos();
 
-            // Mostrar en el campo el valor con el símbolo correspondiente
+            // Mostrar formato
             if (tipo.equals("porcentaje")) {
                 jTextField2.setText((valor % 1 == 0 ? (int) valor : valor) + "%");
             } else {
@@ -296,7 +298,6 @@ public class ConsultarCupones extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Cupón modificado exitosamente.");
 
             // Limpiar
-            cupon = null;
             jTextField1.setText("");
             jTextField2.setText("");
             jTextField3.setText("");
@@ -309,7 +310,8 @@ public class ConsultarCupones extends javax.swing.JFrame {
     } else {
         JOptionPane.showMessageDialog(this, "Seleccione un cupón a modificar primero.");
     }
-    
+                                                
+  
        
     }//GEN-LAST:event_jButton4ActionPerformed
 

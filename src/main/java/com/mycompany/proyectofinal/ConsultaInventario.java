@@ -31,7 +31,7 @@ public class ConsultaInventario extends javax.swing.JFrame {
     }
      public void llenarTabla() {
         modeloTabla.setRowCount(0);
-        for (Libros libros : Proyectofinal.libros) {
+        for (Libros libros : ControladorDato.getListas().getLibros()) {
             modeloTabla.addRow(new Object[]{
                 libros.getTitulo(),
                 libros.getAutor(),
@@ -228,32 +228,51 @@ public class ConsultaInventario extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-      
-        if (libros != null){
-             if (jTextField1.getText().isEmpty() || jTextField2.getText().isEmpty() || 
-            jTextField3.getText().isEmpty() || jTextField4.getText().isEmpty() || 
-            jTextField5.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Todos los campos deben ser completados.");
-            return;
-        }
-        libros.setTitulo(jTextField1.getText());
-        libros.setAutor(jTextField2.getText());
-        libros.setGenero(jTextField3.getText());
-        libros.setPrecio(Integer.parseInt(jTextField4.getText()));
-        libros.setCantidad(Integer.parseInt(jTextField5.getText()));
-        
+                                              
+    // Validar si los campos no están vacíos
+    if (jTextField1.getText().isEmpty() || jTextField2.getText().isEmpty() || 
+        jTextField3.getText().isEmpty() || jTextField4.getText().isEmpty() || 
+        jTextField5.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Todos los campos deben ser completados.");
+        return;  // Salir del método si hay algún campo vacío
+    }
+
+    // Obtener la fila seleccionada en la tabla
+    int filaSeleccionada = jTable1.getSelectedRow();
+    
+    // Verificar si se ha seleccionado una fila válida
+    if (filaSeleccionada >= 0) {
+        // Obtener los valores de los campos de texto
+        String titulo = jTextField1.getText();
+        String autor = jTextField2.getText();
+        String genero = jTextField3.getText();
+        double precio = Double.parseDouble(jTextField4.getText()); // Asegurarse de que el precio es un número válido
+        int cantidad = Integer.parseInt(jTextField5.getText()); // Asegurarse de que la cantidad es un número válido
+
+        // Crear el objeto libro con los datos modificados
+        Libros libroModificado = new Libros(titulo, autor, genero, precio, cantidad);
+
+        // Actualizar el libro en la lista de libros en el controlador de datos
+        ControladorDato.getListas().getLibros().set(filaSeleccionada, libroModificado);
+
+        // Guardar los cambios en el archivo (JSON o el que estés utilizando)
+        ControladorDato.guardarDatos();
+
+        // Actualizar la tabla para reflejar los cambios
         llenarTabla();
-     } else{ 
-                JOptionPane.showMessageDialog(this,"Libro modificado con exito");
-                
-                }
-         
+
+        // Mostrar mensaje de éxito
+        JOptionPane.showMessageDialog(this, "Libro modificado con éxito.");
+    } else {
+        // Si no se seleccionó una fila válida
+        JOptionPane.showMessageDialog(this, "Seleccione un libro válido para modificar.");
+    }       
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         int modificar = jTable1.getSelectedRow();
         if (modificar > -1){
-          libros = Proyectofinal.libros.get(modificar);
+          libros = ControladorDato.getListas().getLibros().get(modificar);
             
             jTextField1.setText(libros.getTitulo());
             jTextField2.setText(libros.getAutor());
@@ -280,7 +299,7 @@ public class ConsultaInventario extends javax.swing.JFrame {
             else{
                
                if(JOptionPane.showConfirmDialog(this, "Está seguro de eliminar este libro")== 0){
-             Proyectofinal.libros.remove(borrar);
+             ControladorDato.getListas().getLibros().remove(borrar);
               llenarTabla();
               JOptionPane.showMessageDialog(this, "Libro eliminado exitosamente");
               
@@ -293,24 +312,33 @@ public class ConsultaInventario extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-       JFileChooser fc = new JFileChooser();
-      int seleccion = fc.showOpenDialog(this);
+     JFileChooser fc = new JFileChooser();
+int seleccion = fc.showOpenDialog(this);
 
-    if (seleccion == JFileChooser.APPROVE_OPTION) {
+if (seleccion == JFileChooser.APPROVE_OPTION) {
     File fichero = fc.getSelectedFile();
 
-    ArrayList<Libros> libros = ArchivoJson.cargarLibroJson(fichero); // método que recibe File
+    // Cargar los libros desde el archivo JSON
+    ArrayList<Libros> libros = ArchivoJson.cargarLibroJson(fichero); // Método que recibe el archivo
 
+    // Verificar si la lista de libros cargada está vacía
     if (libros.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Archivo vacío o formato incorrecto");
     } else {
-         Proyectofinal.libros.addAll(libros); 
-        llenarTabla(); 
+        
+        // Llenar la tabla con los libros cargados
+        for (Libros libro : libros) {
+            modeloTabla.addRow(new Object[]{
+                libro.getTitulo(),
+                libro.getAutor(),
+                libro.getGenero(),
+                libro.getPrecio(),
+                libro.getCantidad()
+            });
+        }
     }
 }
 
-        
-   
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed

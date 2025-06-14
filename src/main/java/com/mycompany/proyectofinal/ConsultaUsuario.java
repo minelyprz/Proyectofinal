@@ -4,6 +4,7 @@
  */
 package com.mycompany.proyectofinal;
 
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -28,13 +29,14 @@ public class ConsultaUsuario extends javax.swing.JFrame {
        pintarTabla();
                }
      private void pintarTabla (){
-     DefaultTableModel t = new DefaultTableModel(new String[]{"Nombre","Usuario","Password","rol"},Proyectofinal.usuarios.size());
+           List<Usuario> usuarios = ControladorDato.getListas().getUsuarios();
+     DefaultTableModel t = new DefaultTableModel(new String[]{"Nombre","Usuario","Password","rol"},usuarios.size());
         jTable1.setModel(t);
         
         TableModel tabla = jTable1.getModel();
         
-        for (int i = 0; i<Proyectofinal.usuarios.size();i++){
-            Usuario u = Proyectofinal.usuarios.get(i);
+        for (int i = 0; i< usuarios.size();i++){
+            Usuario u = usuarios.get(i);
             tabla.setValueAt(u.getNombre(),i,0);
             tabla.setValueAt(u.getUsuario(),i,1);
             tabla.setValueAt(u.getPassword(),i,2);
@@ -234,7 +236,7 @@ public class ConsultaUsuario extends javax.swing.JFrame {
             }
             else{
                if(JOptionPane.showConfirmDialog(this, "Está seguro de eliminar al usuario")== 0){
-             Proyectofinal.usuarios.remove(borrar);
+             ControladorDato.getListas().getUsuarios().remove(borrar);
               pintarTabla();
               JOptionPane.showMessageDialog(this, "Usuario Eliminado");
               
@@ -255,7 +257,7 @@ public class ConsultaUsuario extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         int modificar = jTable1.getSelectedRow();
         if (modificar > -1){
-          usuario = Proyectofinal.usuarios.get(modificar);
+          usuario = ControladorDato.getListas().getUsuarios().get(modificar);
             
             jTextField1.setText(usuario.getNombre());
             jTextField2.setText(usuario.getUsuario());
@@ -282,6 +284,7 @@ public class ConsultaUsuario extends javax.swing.JFrame {
         else{
             usuario.setRol(2);
         }
+        ControladorDato.guardarDatos();
         pintarTabla();
     }
         jTextField1.setText("");

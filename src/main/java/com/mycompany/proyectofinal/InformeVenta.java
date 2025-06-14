@@ -6,8 +6,6 @@ package com.mycompany.proyectofinal;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.JFileChooser;
@@ -41,8 +39,8 @@ public class InformeVenta extends javax.swing.JFrame {
         continue;  // Ya se mostró esta venta
     }
               ventasMostradas.add(keyUnica);
-            LocalDate fecha = venta.getFecha();
-            String hora = venta.getHora().toString(); // O guarda la hora en la clase VentaLibros
+            String fecha = (venta.getFecha() != null) ? venta.getFecha().toString() : "Fecha no registrada";
+            String hora = (venta.getHora() != null) ? venta.getHora().toString() : "Hora no registrada";
             String nit = venta.getNitcliente();
             String nombre = venta.getNombreCliente();
             String direccion = venta.getDireccion();
@@ -67,7 +65,7 @@ public class InformeVenta extends javax.swing.JFrame {
     String.format("%.2f", totalConIva),
     String.format("%.2f", totalSinIva),
     descuento,
-    fecha.toString(),
+    fecha,
     hora,
     nit,
     nombre,

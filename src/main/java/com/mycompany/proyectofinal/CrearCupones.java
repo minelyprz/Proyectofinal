@@ -237,7 +237,9 @@ public class CrearCupones extends javax.swing.JFrame {
     return;
 }
 
-   Proyectofinal.cupones.add(c);
+   Listas listas = ControladorDato.getListas();
+    listas.getCupones().add(c);
+    ControladorDato.setListas(listas);
      String linea = c.getcodigo() + "|" + c.getvalor() + "|" + c.getTipo() + "|" + c.getfecha();
     Archivo.escribir("cupones.csv", linea + "\n", true);
 

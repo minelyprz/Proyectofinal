@@ -31,7 +31,7 @@ public class ReporteVenta extends javax.swing.JFrame {
    public void mostrarVenta() {
     modeloTabla.setRowCount(0); // Limpiar tabla
 
-    for (VentaLibros venta : Rventa.obtenerVentas()) {
+    for (VentaLibros venta : ControladorDato.getListas().getListaVentas()) {
         modeloTabla.addRow(new Object[]{
             venta.getNitcliente(),
             venta.getNombreCliente(),
@@ -39,7 +39,7 @@ public class ReporteVenta extends javax.swing.JFrame {
             String.format("Q%.2f", venta.getTotal()),
             String.format("Q%.2f", venta.getTotal() / 1.12),
             venta.getVendedor().getNombre(),
-            venta.getFecha().toString()
+            (venta.getFecha() != null) ? venta.getFecha().toString() : "Fecha no registrada"
         });
     }
 }

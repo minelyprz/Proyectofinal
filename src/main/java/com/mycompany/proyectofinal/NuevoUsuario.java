@@ -157,7 +157,7 @@ public class NuevoUsuario extends javax.swing.JFrame {
     } 
         
         String usuario = jTextField1.getText();
-    for (Usuario u : Proyectofinal.usuarios) {
+    for (Usuario u : ControladorDato.getListas().getUsuarios()) {
         if (u.getUsuario().equals(usuario)) {
             JOptionPane.showMessageDialog(this, "El nombre de usuario ya está registrado.");
             return;  // Si el usuario ya existe, no continuar
@@ -193,8 +193,11 @@ public class NuevoUsuario extends javax.swing.JFrame {
             jTextField3.setText("");
             jComboBox1.setSelectedIndex(0);
         
-        Proyectofinal.usuarios.add(u);
-        Leerusuario.escribirXML("Usuario.xml", Proyectofinal.usuarios);
+        Listas listas = ControladorDato.getListas();
+       listas.getUsuarios().add(u);
+      ControladorDato.setListas(listas); // ✅ Muy importante
+      ControladorDato.guardarDatos();
+       
         JOptionPane.showMessageDialog(this, "Usuario creado exitosamente");
         
     }//GEN-LAST:event_jButton1ActionPerformed
